@@ -19,3 +19,28 @@ describe 'restaurant listings page' do
 		end
 	end
 end
+
+describe 'restaurant creation form' do 
+	it 'should be able to create a restaurant' do 
+		visit '/restaurants/new'
+		fill_in "Name", with: 'Royal China'
+		click_button 'Create Restaurant'
+		expect(current_path).to eq '/restaurants'
+		expect(page).to have_content 'Royal China'
+	end
+end
+
+describe 'restuarant edit form' do 
+	before {Restaurant.create name: 'Royal China'}
+	it 'should be able to edit a restaurant' do 
+		visit '/restaurants'
+		click_link 'Edit Royal China'
+
+		fill_in 'Name', with: 'Royal China Queensway'
+
+		click_button 'Update Restaurant'
+
+		expect(current_path).to eq '/restaurants'
+		expect(page).to have_content 'Royal China Queensway'
+	end
+end
