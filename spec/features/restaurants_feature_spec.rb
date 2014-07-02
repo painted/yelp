@@ -24,14 +24,18 @@ describe 'restaurant creation form' do
 	it 'should be able to create a restaurant' do 
 		visit '/restaurants/new'
 		fill_in "Name", with: 'Royal China'
+		fill_in "Cuisine", with: 'Chinese'
 		click_button 'Create Restaurant'
+
 		expect(current_path).to eq '/restaurants'
-		expect(page).to have_content 'Royal China'
+		expect(page).to have_content 'Royal China (Chinese)'
+
 	end
 end
 
 describe 'restuarant edit form' do 
-	before {Restaurant.create name: 'Royal China'}
+	before {Restaurant.create name: 'Royal China', cuisine: 'Chinese'}
+
 	it 'should be able to edit a restaurant' do 
 		visit '/restaurants'
 		click_link 'Edit Royal China'
@@ -43,4 +47,13 @@ describe 'restuarant edit form' do
 		expect(current_path).to eq '/restaurants'
 		expect(page).to have_content 'Royal China Queensway'
 	end
+
+	it 'should be able to delete a restaurant' do 
+		visit '/restaurants'
+		click_link 'Delete Royal China'
+		expect(current_path).to eq '/restaurants'
+		expect(page).not_to have_content 'Royal China Queensway (Chinese)'
+		expect(page).to have_content 'Successfully deleted Royal China'
+	end
 end
+
