@@ -10,7 +10,7 @@ describe 'restaurant listings page' do
 
 	context 'are restaurants' do 
 		before do 
-			Restaurant.create(name: 'Ledbury')
+			Restaurant.create(name: 'Ledbury', cuisine: 'French')
 		end
 
 		it 'should show the restaurant' do 
@@ -21,15 +21,31 @@ describe 'restaurant listings page' do
 end
 
 describe 'restaurant creation form' do 
-	it 'should be able to create a restaurant' do 
-		visit '/restaurants/new'
-		fill_in "Name", with: 'Royal China'
-		fill_in "Cuisine", with: 'Chinese'
-		click_button 'Create Restaurant'
 
-		expect(current_path).to eq '/restaurants'
-		expect(page).to have_content 'Royal China (Chinese)'
+	context 'input is valid' do 
+		it 'should be able to create a restaurant' do 
+			visit '/restaurants/new'
+			fill_in "Name", with: 'Royal China'
+			fill_in "Cuisine", with: 'Chinese'
+			click_button 'Create Restaurant'
 
+			expect(current_path).to eq '/restaurants'
+			expect(page).to have_content 'Royal China (Chinese)'
+
+		end
+	end
+
+	context 'input is invalid' do 
+		it 'should be able to create a restaurant' do 
+			visit '/restaurants/new'
+			fill_in "Name", with: 'royal china'
+			fill_in "Cuisine", with: 'Chi'
+			click_button 'Create Restaurant'
+
+			expect(current_path).to eq '/restaurants'
+			expect(page).not_to have_content 'royal china (Chi)'
+			expect(page).to have_content 'Errors'
+		end
 	end
 end
 
