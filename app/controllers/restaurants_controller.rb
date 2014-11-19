@@ -26,9 +26,13 @@ before_action :authenticate_user!, except: [:index]
 	end
 
 	def update
-		find_restaurant
+		@restaurant = current_user.restaurants.find params[:id]
 		@restaurant.update restaurant_params
-		redirect_to '/restaurants'
+		rescue ActiveRecord::RecordNotFound
+			Rails.logger.warn('WARNING: A user tried to edit a restaurant')
+			flash[:notice] = 'You do not have permission to edit the restaurant: '
+		ensure
+			redirect_to '/restaurants'
 	end
 
 	def destroy
@@ -38,7 +42,7 @@ before_action :authenticate_user!, except: [:index]
 		flash[:notice] = "Successfully deleted #{@restaurant.name}"
 		rescue ActiveRecord::RecordNotFound
 			Rails.logger.warn('WARNING: A user tried to delete a restaurant')
-			flash[:notice] = 'You do not have permission to Delete Restaurant'
+			flash[:notice] = 'You do not have permission to delete the restaurant: '
 		ensure
 			redirect_to '/restaurants'
 	end

@@ -39,6 +39,6 @@ context 'logged in as another restaurant creator' do
     it 'cannot delete restaurants' do
         visit '/restaurants'
         click_link 'Delete Royal China'
-        expect(page).to have_content 'You do not have permission to Delete Restaurant Royal China'
+        expect(page).to have_content 'You do not have permission to delete the restaurant: Royal China'
     end
 end
