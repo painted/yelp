@@ -13,7 +13,7 @@ before_action :authenticate_user!, except: [:index]
 
 	def create
 		@restaurant = Restaurant.new restaurant_params
-		
+		@restaurant.user = current_user
 		if @restaurant.save
 			redirect_to '/restaurants'
 		else
@@ -32,11 +32,15 @@ before_action :authenticate_user!, except: [:index]
 	end
 
 	def destroy
-		find_restaurant
+		@restaurant = current_user.restaurants.find params[:id]
 		@restaurant.destroy
 
 		flash[:notice] = "Successfully deleted #{@restaurant.name}"
-		redirect_to '/restaurants'
+		rescue ActiveRecord::RecordNotFound
+			Rails.logger.warn('WARNING: A user tried to delete a restaurant')
+			flash[:notice] = 'You do not have permission to Delete Restaurant'
+		ensure
+			redirect_to '/restaurants'
 	end
 
 	private

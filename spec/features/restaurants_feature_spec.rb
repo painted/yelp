@@ -67,11 +67,11 @@ describe 'restaurant creation form' do
 end
 
 describe 'restuarant edit form' do 
-	
+
 	before do
 		user = User.create email: 's@s.com', password: '12345678', password_confirmation: '12345678'
 		login_as user
-		Restaurant.create name: 'Royal China', cuisine: 'Chinese'
+		user.restaurants.create name: 'Royal China', cuisine: 'Chinese'
 	end
 
 	context 'logged in' do 

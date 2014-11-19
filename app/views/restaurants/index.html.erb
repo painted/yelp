@@ -6,7 +6,9 @@
 			<%= star_rating(r.average_rating) %><br>
 			</span>
 			<%= link_to "Edit #{r.name}", edit_restaurant_path(r.id) %><br>
-			<%= link_to "Delete #{r.name}", restaurant_path(r.id), method: :delete, 'data-confirm' => "Are you sure you want to delete this?" %><br>
+			<% if current_user %>
+				<%= link_to "Delete #{r.name}", restaurant_path(r.id), method: :delete, 'data-confirm' => "Are you sure you want to delete this?" %><br>
+			<% end %>
 			<%= link_to "Review #{r.name}", new_restaurant_review_path(r.id) %><br>
 			<ul class='reviews'>
 				<% r.reviews.each do |review| %>
