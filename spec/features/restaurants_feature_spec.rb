@@ -26,10 +26,10 @@ describe 'restaurant creation form' do
 		it 'should forward user to sign in page' do 
 			visit '/restaurants'
 			click_link 'Create Restaurant'
-			expect(page).to have_content 'Sign in'
+			expect(page).to have_content 'sign in'
 		end
 	end
-	
+
 	# context 'logged in' do 
 	# 	context 'input is valid' do 
 	# 		it 'should be able to create a restaurant' do 
