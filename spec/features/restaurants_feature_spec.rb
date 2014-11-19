@@ -27,61 +27,73 @@ describe 'restaurant creation form' do
 			visit '/restaurants'
 			click_link 'Create Restaurant'
 			expect(page).to have_content 'sign in'
+			expect(current_path).to eq '/users/sign_in'
 		end
 	end
 
-	# context 'logged in' do 
-	# 	context 'input is valid' do 
-	# 		it 'should be able to create a restaurant' do 
-	# 			visit '/restaurants/new'
-	# 			fill_in "Name", with: 'Royal China'
-	# 			fill_in "Cuisine", with: 'Chinese'
-	# 			click_button 'Create Restaurant'
+	context 'logged in' do 
 
-	# 			expect(current_path).to eq '/restaurants'
-	# 			expect(page).to have_content 'Royal China (Chinese)'
+		before do 
+			user = User.create email: 's@s.com', password: '12345678', password_confirmation: '12345678'
+			login_as user
+		end
 
-	# 		end
-	# 	end
+		context 'input is valid' do 
+			it 'should be able to create a restaurant' do 
+				visit '/restaurants/new'
+				fill_in "Name", with: 'Royal China'
+				fill_in "Cuisine", with: 'Chinese'
+				click_button 'Create Restaurant'
 
-	# 	context 'input is invalid' do 
-	# 		it 'should be able to create a restaurant' do 
-	# 			visit '/restaurants/new'
-	# 			fill_in "Name", with: 'royal china'
-	# 			fill_in "Cuisine", with: 'Chi'
-	# 			click_button 'Create Restaurant'
+				expect(current_path).to eq '/restaurants'
+				expect(page).to have_content 'Royal China (Chinese)'
 
-	# 			expect(current_path).to eq '/restaurants'
-	# 			expect(page).not_to have_content 'royal china (Chi)'
-	# 			expect(page).to have_content 'Errors'
-	# 		end
-	# 	end
-	# end
+			end
+		end
+
+		context 'input is invalid' do 
+			it 'should be able to create a restaurant' do 
+				visit '/restaurants/new'
+				fill_in "Name", with: 'royal china'
+				fill_in "Cuisine", with: 'Chi'
+				click_button 'Create Restaurant'
+
+				expect(current_path).to eq '/restaurants'
+				expect(page).not_to have_content 'royal china (Chi)'
+				expect(page).to have_content 'Errors'
+			end
+		end
+	end
 end
 
 describe 'restuarant edit form' do 
-	before {Restaurant.create name: 'Royal China', cuisine: 'Chinese'}
+	
+	before do
+		user = User.create email: 's@s.com', password: '12345678', password_confirmation: '12345678'
+		login_as user
+		Restaurant.create name: 'Royal China', cuisine: 'Chinese'
+	end
 
-	# context 'logged in' do 
-	# 	it 'should be able to edit a restaurant' do 
-	# 		visit '/restaurants'
-	# 		click_link 'Edit Royal China'
+	context 'logged in' do 
+		it 'should be able to edit a restaurant' do 
+			visit '/restaurants'
+			click_link 'Edit Royal China'
 
-	# 		fill_in 'Name', with: 'Royal China Queensway'
+			fill_in 'Name', with: 'Royal China Queensway'
 
-	# 		click_button 'Update Restaurant'
+			click_button 'Update Restaurant'
 
-	# 		expect(current_path).to eq '/restaurants'
-	# 		expect(page).to have_content 'Royal China Queensway'
-	# 	end
+			expect(current_path).to eq '/restaurants'
+			expect(page).to have_content 'Royal China Queensway'
+		end
 
-	# 	it 'should be able to delete a restaurant' do 
-	# 		visit '/restaurants'
-	# 		click_link 'Delete Royal China'
-	# 		expect(current_path).to eq '/restaurants'
-	# 		expect(page).not_to have_content 'Royal China Queensway (Chinese)'
-	# 		expect(page).to have_content 'Successfully deleted Royal China'
-	# 	end
-	# end
+		it 'should be able to delete a restaurant' do 
+			visit '/restaurants'
+			click_link 'Delete Royal China'
+			expect(current_path).to eq '/restaurants'
+			expect(page).not_to have_content 'Royal China Queensway (Chinese)'
+			expect(page).to have_content 'Successfully deleted Royal China'
+		end
+	end
 end
 
