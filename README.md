@@ -41,7 +41,6 @@ This is a restaurant reviewing app.
 
   * From command line enter:
 ```
-bash
 git clone https://github.com/painted/yelp
 cd yelp
 rspec
