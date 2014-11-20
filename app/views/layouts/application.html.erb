@@ -3,18 +3,22 @@
 <head>
 	<title>Yelp</title>
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
 	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	<%= csrf_meta_tags %>
 </head>
 <body>
 	<nav>
-		<% if user_signed_in? %>
-		    <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-		    <%= link_to('Edit Account', edit_user_registration_path) %>
-		<% else %>
-		    <%= link_to('Login', new_user_session_path) %>
-		    <%= link_to('Register', new_user_registration_path) %>
-		<% end %>
+		<a href='/' class='logo'>Painted Yelp</a>
+		<span class='user_menu'>
+			<% if user_signed_in? %>
+			    <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+			    <%= link_to('Edit Account', edit_user_registration_path) %>
+			<% else %>
+			    <%= link_to('Login', new_user_session_path) %>
+			    <%= link_to('Register', new_user_registration_path) %>
+			<% end %>
+		</span>
 	</nav>
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>

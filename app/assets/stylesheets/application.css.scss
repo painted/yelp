@@ -32,18 +32,25 @@ body {
 nav {
     background: #eee;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
 
     a {
         @extend .button;
     }
+
+    .logo {
+        padding-right: 60px;
+        background: none;
+        font-size: 35px;
+        font-family: 'Tangerine', serif;
+        color: $nicered;
+        }
+
 }
 
 a {
     color: $nicered;
-}
-
-.l-content {
-    margin: 0 auto;
 }
 
 .pricing-tables,
