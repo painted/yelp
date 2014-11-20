@@ -37,6 +37,16 @@ This is a restaurant reviewing app.
 * Pure CSS
 * SASS
 
+###How to test the application via RSPEC:
+
+  * From command line enter:
+```
+bash
+git clone https://github.com/painted/yelp
+cd yelp
+rspec
+```
+
 ##What I would like to add?
 * User Accountability for Reviews
 * Limit to 1 Review per User per Restaurant

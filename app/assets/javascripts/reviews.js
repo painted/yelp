@@ -6,9 +6,7 @@ $(document).ready(function(){
 		$.post($(this).attr('action'), $(this).serialize(), function(review){
 			restaurant.find('ul.reviews').append('<li>' + review.thoughts + '(' + review.rating + ')</li>')
 			restaurant.find('.average_rating').text(review.new_average_rating),
-			success: function(){    
-                        location.reload();   
-                    }
+			location.reload(true)
 		});
 	})
 })
